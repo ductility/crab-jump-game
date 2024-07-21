@@ -58,3 +58,21 @@ body {
         right: 100%;
     }
 }
+
+.score-board {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #ffffff;
+    background-color: #d9534f; /* 붉은색 계열 */
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Arial', sans-serif;
+}
+
+.score-board span {
+    font-weight: bold;
+    color: #ffffff;
+}
