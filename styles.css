@@ -34,6 +34,22 @@ body {
     animation: moveObstacle 2s infinite linear;
 }
 
+#jump-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 100px;
+    height: 50px;
+    background-color: #ff6347;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 10; /* 버튼이 다른 요소 위에 있도록 설정 */
+}
+
 @keyframes moveObstacle {
     0% {
         right: -50px;

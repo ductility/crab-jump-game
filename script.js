@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const player = document.getElementById("player");
     const obstacle = document.getElementById("obstacle");
+    const jumpButton = document.getElementById("jump-button");
     let isJumping = false;
     let isGameOver = false;
     const jumpHeight = 1000; // 최대 점프 높이
@@ -15,6 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.code === "Space" && !isJumping) {
             jump();
         }
+    });
+    jumpButton.addEventListener("click", () => {
+        jump();
     });
 
     function jump() {
