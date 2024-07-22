@@ -55,9 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const obstacleRect = obstacle.getBoundingClientRect();
         if (
             playerRect.right - collisionBuff > obstacleRect.left &&
-            playerRect.left + collisionBuff < obstacleRect.right &&
+            playerRect.left - collisionBuff < obstacleRect.right &&
             playerRect.bottom - collisionBuff > obstacleRect.top &&
-            playerRect.top + collisionBuff < obstacleRect.bottom
+            playerRect.top - collisionBuff < obstacleRect.bottom
         ) {
             alert("Game Over! Your score: " + score);
             isGameOver = true;
