@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const gravity = 0.4;
     const jumpSpeed = 20;
     const jumpVelocity = 10;
-    const collisionBuff = 5;
+    const collisionBuff = 10;
 
     player.style.bottom = '0px';
 
