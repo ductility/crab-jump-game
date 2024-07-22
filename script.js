@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const gravity = 0.4;
     const jumpSpeed = 20;
     const jumpVelocity = 10;
+    const collisionBuff = 5;
 
     player.style.bottom = '0px';
 
@@ -53,10 +54,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const playerRect = player.getBoundingClientRect();
         const obstacleRect = obstacle.getBoundingClientRect();
         if (
-            playerRect.right > obstacleRect.left &&
-            playerRect.left < obstacleRect.right &&
-            playerRect.bottom > obstacleRect.top &&
-            playerRect.top < obstacleRect.bottom
+            playerRect.right - collisionBuff > obstacleRect.left &&
+            playerRect.left + collisionBuff < obstacleRect.right &&
+            playerRect.bottom - collisionBuff > obstacleRect.top &&
+            playerRect.top + collisionBuff < obstacleRect.bottom
         ) {
             alert("Game Over! Your score: " + score);
             isGameOver = true;
