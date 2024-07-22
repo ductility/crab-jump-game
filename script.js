@@ -7,13 +7,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let isJumping = false;
     let isGameOver = false;
     let score = 0;
-    const jumpHeight = 1000;
+    const jumpHeight = 150;
     const gravity = 0.4;
     const jumpSpeed = 20;
     const jumpVelocity = 10;
     const collisionBuff = 10;
+    let obstacleSpeed = 5;
+    let obstaclePosition = 800;
 
     player.style.bottom = '0px';
+    obstacle.style.left = `${obstaclePosition}px`;
 
     document.addEventListener("keydown", (event) => {
         if (event.code === "Space" && !isJumping) {
@@ -69,18 +72,30 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!isGameOver) {
             score++;
             scoreElement.textContent = score;
+            updateObstacleSpeed();
         }
     }
 
-    setInterval(() => {
-        if (!isGameOver) {
-            checkCollision();
+    function updateObstacleSpeed() {
+        obstacleSpeed = 5 + score * 0.1;
+    }
+
+    function moveObstacle() {
+        if (isGameOver) return;
+        obstaclePosition -= obstacleSpeed;
+        if (obstaclePosition <= -50) {
+            obstaclePosition = 800;
         }
-    }, 10);
+        obstacle.style.left = `${obstaclePosition}px`;
+        checkCollision();
+        requestAnimationFrame(moveObstacle);
+    }
 
     setInterval(() => {
         if (!isGameOver) {
             updateScore();
         }
     }, 1000);
+
+    moveObstacle();
 });
