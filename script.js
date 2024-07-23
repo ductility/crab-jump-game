@@ -7,19 +7,21 @@ document.addEventListener("DOMContentLoaded", () => {
     let isJumping = false;
     let isGameOver = false;
     let score = 0;
-    const jumpHeight = 150;
-    const gravity = 0.4;
-    const jumpSpeed = 20;
-    const jumpVelocity = 10;
+    let jumpCount = 0; // 더블 점프를 위한 점프 카운트
+
+    const jumpHeight = 500;
+    const gravity = 0.7; // 중력 가속도를 적절히 조절
+    const jumpVelocity = 12; // 초기 점프 속도
     const collisionBuff = 10;
     let obstacleSpeed = 5;
     let obstaclePosition = 800;
+    let velocity = 0; // 플레이어의 속도를 추적
 
     player.style.bottom = '0px';
     obstacle.style.left = `${obstaclePosition}px`;
 
     document.addEventListener("keydown", (event) => {
-        if (event.code === "Space" && !isJumping) {
+        if (event.code === "Space") {
             jump();
         }
     });
@@ -29,28 +31,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function jump() {
-        if (isJumping) return;
-        isJumping = true;
+        if (jumpCount >= 2) return; // 더블 점프를 위한 조건
+        if (isGameOver) return;
+
+        velocity = jumpVelocity; // 점프 시 속도 설정
+        jumpCount++;
+    }
+
+    function applyGravity() {
         let currentBottom = parseInt(player.style.bottom);
-        let velocity = jumpVelocity;
+        velocity -= gravity; // 중력을 속도에 적용
+        currentBottom += velocity;
 
-        let interval = setInterval(() => {
-            currentBottom += velocity;
-            velocity -= gravity;
+        if (currentBottom <= 0) { // 플레이어가 바닥에 닿으면
+            currentBottom = 0;
+            isJumping = false;
+            jumpCount = 0; // 점프 카운트 리셋
+            velocity = 0; // 속도 리셋
+        }
 
-            if (currentBottom >= jumpHeight) {
-                currentBottom = jumpHeight;
-                velocity = -velocity;
-            }
+        player.style.bottom = `${currentBottom}px`;
 
-            if (currentBottom <= 0) {
-                currentBottom = 0;
-                clearInterval(interval);
-                isJumping = false;
-            }
-
-            player.style.bottom = `${currentBottom}px`;
-        }, jumpSpeed);
+        if (!isGameOver) {
+            requestAnimationFrame(applyGravity);
+        }
     }
 
     function checkCollision() {
@@ -59,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const width = playerRect.right - playerRect.left;
         if (
             playerRect.right - collisionBuff > obstacleRect.left &&
-            (playerRect.left + width/2) - collisionBuff < obstacleRect.right &&
+            (playerRect.left + width / 2) - collisionBuff < obstacleRect.right &&
             playerRect.bottom - collisionBuff > obstacleRect.top &&
             playerRect.top - collisionBuff < obstacleRect.bottom
         ) {
@@ -98,5 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 1000);
 
+    applyGravity();
     moveObstacle();
 });
