@@ -56,9 +56,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function checkCollision() {
         const playerRect = player.getBoundingClientRect();
         const obstacleRect = obstacle.getBoundingClientRect();
+        const width = playerRect.right - playerRect.left;
         if (
             playerRect.right - collisionBuff > obstacleRect.left &&
-            playerRect.left - collisionBuff < obstacleRect.right &&
+            (playerRect.left + width/2) - collisionBuff < obstacleRect.right &&
             playerRect.bottom - collisionBuff > obstacleRect.top &&
             playerRect.top - collisionBuff < obstacleRect.bottom
         ) {
