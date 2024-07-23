@@ -9,11 +9,28 @@ body {
 
 .game-container {
     position: relative;
-    width: 800px;
-    height: 300px;
-    border: 2px solid #000;
+    width: 800px; /* 너비 설정 */
+    height: 450px; /* 16:9 비율에 맞춘 높이 */
     overflow: hidden;
     background-color: #ece899;
+}
+
+.background {
+    position: absolute;
+    width: 800px; /* game-container와 동일한 너비 */
+    height: 450px; /* game-container와 동일한 높이 */
+    background-image: url('beach.png'); /* 해변가 느낌의 배경 이미지 사용 */
+    background-size: cover;
+}
+
+#background1 {
+    left: 0;
+    z-index: 0; /* 배경이 가장 뒤에 있도록 설정 */
+}
+
+#background2 {
+    left: 800px; /* 두 번째 배경은 첫 번째 배경의 오른쪽에 위치 */
+    z-index: 0; /* 배경이 가장 뒤에 있도록 설정 */
 }
 
 .player {
@@ -22,16 +39,16 @@ body {
     left: 50px;
     width: 50px;
     height: 50px;
+    z-index: 1; /* 플레이어가 배경 위에 있도록 설정 */
 }
 
 .obstacle {
     position: absolute;
     bottom: 0;
     right: -50px;
-    /* width: 50px; */
     height: 50px;
-    /* background-color: green; */
     animation: moveObstacle linear infinite;
+    z-index: 1; /* 장애물이 플레이어와 배경 위에 있도록 설정 */
 }
 
 #jump-button {
@@ -70,6 +87,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     font-family: 'Arial', sans-serif;
+    z-index: 10; /* 점수판이 다른 요소 위에 있도록 설정 */
 }
 
 .score-board span {

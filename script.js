@@ -4,6 +4,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const jumpButton = document.getElementById("jump-button");
     const scoreElement = document.getElementById("score");
 
+    // 배경 요소 추가
+    const background1 = document.createElement('div');
+    background1.classList.add('background');
+    background1.id = 'background1';
+    document.querySelector('.game-container').appendChild(background1);
+
+    const background2 = document.createElement('div');
+    background2.classList.add('background');
+    background2.id = 'background2';
+    document.querySelector('.game-container').appendChild(background2);
+
     let isJumping = false;
     let isGameOver = false;
     let score = 0;
@@ -96,12 +107,36 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(moveObstacle);
     }
 
+    function moveBackground() {
+        const background1Position = parseInt(window.getComputedStyle(background1).left);
+        const background2Position = parseInt(window.getComputedStyle(background2).left);
+
+        background1.style.left = `${background1Position - obstacleSpeed}px`;
+        background2.style.left = `${background2Position - obstacleSpeed}px`;
+
+        if (background1Position <= -gameContainer.offsetWidth) {
+            background1.style.left = `${background2Position + gameContainer.offsetWidth}px`;
+        }
+
+        if (background2Position <= -gameContainer.offsetWidth) {
+            background2.style.left = `${background1Position + gameContainer.offsetWidth}px`;
+        }
+    }
+
     setInterval(() => {
         if (!isGameOver) {
             updateScore();
         }
     }, 1000);
 
+    function gameLoop() {
+        if (!isGameOver) {
+            moveObstacle();
+            moveBackground();
+            requestAnimationFrame(gameLoop);
+        }
+    }
+
     applyGravity();
-    moveObstacle();
+    gameLoop();
 });
