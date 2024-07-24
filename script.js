@@ -84,8 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function moveObstacle() {
         if (isGameOver) return;
         obstaclePosition -= obstacleSpeed;
-        if (obstaclePosition <= -50) {
-            obstaclePosition = 800;
+        if (obstaclePosition <= -5 && !isJumping) {
+            obstaclePosition = Math.random() * 501 + 300;;
         }
         obstacle.style.left = `${obstaclePosition}px`;
         checkCollision();
